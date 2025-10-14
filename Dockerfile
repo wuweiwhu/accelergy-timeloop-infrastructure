@@ -347,7 +347,7 @@ RUN wget -O islpy-2024.2.tar.gz https://github.com/inducer/islpy/archive/refs/ta
     && cd islpy-2024.2 \
     && sed -i 's/python/python3/g' build-with-barvinok.sh \
     # && ./build-with-barvinok.sh /usr/local
-    && ./configure.py --use-barvinok --isl-inc-dir=/usr/local/include --isl-lib-dir=/usr/local/lib --no-use-shipped-isl --no-use-shipped-imath \
+    && ./configure.py --use-barvinok --isl-inc-dir=/usr/local/include --isl-lib-dir=/usr/local/lib --barvinok-inc-dir=/usr/local/include --barvinok-lib-dir/usr/local/lib --no-use-shipped-isl --no-use-shipped-imath \
     && python3 -m pip install .
 
 WORKDIR $BUILD_DIR
