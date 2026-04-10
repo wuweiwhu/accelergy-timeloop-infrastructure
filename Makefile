@@ -107,13 +107,17 @@ lint:
 login:
 	"${DOCKER_EXE}" login --username ${DOCKER_NAME} --password ${DOCKER_PASS}
 
+.PHONY: install_accelergy
 install_accelergy:
 	python3 -m pip install setuptools wheel libconf numpy joblib PyYAML
+	rm -rf ~/.config/accelergy/
+	mkdir -p ~/.config/accelergy/
 	cd src/accelergy-cacti-plug-in && make
 	cd src/accelergy-neurosim-plug-in && make
 	cd src && pip3 install ./accelergy*
 
-install_timeloop-python:
+.PHONY: install_timeloop-python
+install_timeloop-python: install_timeloop
 	sudo apt-get install -y --no-install-recommends \
 		scons \
 		libconfig++-dev \
@@ -126,6 +130,7 @@ install_timeloop-python:
 		cmake
 	source src/timeloop/env/setup-env.bash && cd src/timeloop-python && pip3 install -e .
 
+.PHONY: install_timeloop
 install_timeloop:
 	mkdir -p /tmp/build-timeloop
 
@@ -184,5 +189,7 @@ install_timeloop:
 		&& cp -r "pat-public/src/pat" src  \
 		&& scons -j8 --with-isl --static --accelergy \
 		&& scons -j8 --with-isl --accelergy
-
 	cp src/timeloop/build/timeloop-*  ~/.local/bin/
+
+.PHONY: install_all
+install_all: install_accelergy install_timeloop install_timeloop-python
