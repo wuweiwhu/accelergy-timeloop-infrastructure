@@ -14,6 +14,7 @@
 #
 #   DOCKER_PASS=<password of user used to push the image>
 #
+SHELL := /bin/bash
 DOCKER_EXE ?= docker
 DOCKER_NAME ?= timeloopaccelergy
 
@@ -111,6 +112,19 @@ install_accelergy:
 	cd src/accelergy-cacti-plug-in && make
 	cd src/accelergy-neurosim-plug-in && make
 	cd src && pip3 install ./accelergy*
+
+install_timeloop-python:
+	sudo apt-get install -y --no-install-recommends \
+		scons \
+		libconfig++-dev \
+		libboost-dev \
+		libboost-iostreams-dev \
+		libboost-serialization-dev \
+		libyaml-cpp-dev \
+		libncurses-dev \
+		libgpm-dev \
+		cmake
+	source src/timeloop/env/setup-env.bash && cd src/timeloop-python && pip3 install -e .
 
 install_timeloop:
 	mkdir -p /tmp/build-timeloop
