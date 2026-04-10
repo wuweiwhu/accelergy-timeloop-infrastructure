@@ -167,7 +167,7 @@ install_timeloop:
 		&& sudo make install
 
 	cd src/timeloop \
-		&& ln -s "$(pwd)/pat-public/src/pat" ./src  \
+		&& cp -r "pat-public/src/pat" src  \
 		&& scons -j8 --with-isl --static --accelergy \
 		&& scons -j8 --with-isl --accelergy
 
